@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aplikasi Ayo Sensus Frontend
 
-## Getting Started
+Aplikasi Ayo Sensus Frontend adalah sebuah aplikasi web yang dibuat oleh Team Satu Bagian untuk Hackathon Smart Population dengan sub tema Pendataan Warga Digital. Aplikasi ini dirancang untuk memberikan antarmuka yang ramah dan mudah bagi orang untuk memasukkan data dan melacak nilai rantai aset digital mereka.
 
-First, run the development server:
+## Anggota Tim
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Berikut adalah individu-individu yang berbakat dalam Team Satu Bagian:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Candra Rahadden** - Pengembang Aplikasi Frontend
+2. **Rizqy Bagus Saputra** - Pengembang Aplikasi Backend
+3. **Naufal Haidar Azhar** - Perancang UI/UX
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Fitur
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Autentikasi dan otorisasi pengguna
+- Sistem input dan pelacakan data
+- Visualisasi nilai rantai aset digital
+- Antarmuka yang ramah dan mudah bagi pengguna
 
-## Learn More
+## Stack Teknologi
 
-To learn more about Next.js, take a look at the following resources:
+- Frontend: React, Tailwind CSS, dan TypeScript, Shadcn UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Mengapa Ayo Sensus?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Ayo Sensus adalah sebuah aplikasi yang bertujuan untuk memberikan platform bagi orang untuk memasukan data dan melacak nilai rantai aset digital mereka. Dengan Ayo Sensus, orang dapat memiliki kontrol penuh atas data dan aset digital mereka, dan dapat membuat keputusan yang cerdas tentang bagaimana mereka ingin menggunakan aset digital tersebut.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
