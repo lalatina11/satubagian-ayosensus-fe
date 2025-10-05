@@ -12,7 +12,7 @@ const Page = async () => {
 
   return (
     <div className="flex flex-col">
-      <h1>Welcome {session.name} in Admin Kab Dashboard</h1>
+      <h1>Welcome {session?.name} in Admin Kab Dashboard</h1>
       <LogoutForm />
     </div>
   );
