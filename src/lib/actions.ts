@@ -4,6 +4,7 @@ import z from "zod"
 import { ENV } from "./env"
 import { loginAdminKabupatenSchema } from "./schemas"
 import { cookies } from "next/headers"
+import { AdminRegencySession } from "@/types"
 
 export const handleLoginAdminKabupaten = async (values: z.infer<typeof loginAdminKabupatenSchema>) => {
     const cookie = await cookies()
@@ -22,7 +23,7 @@ export const getAdminKabupatenAuthInfo = async () => {
     console.log(token);
     const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/v1/me`, { headers: { Authorization: `Bearer ${token}` } })
     if (!res.ok) return null
-    return await res.json()
+    return await res.json() as AdminRegencySession
 
 }
 export const handleLogOutAdminKabupaten = async () => {
