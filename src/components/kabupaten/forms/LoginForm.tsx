@@ -69,6 +69,13 @@ const LoginForm = () => {
         ...prev,
         error: (error as Error).message || "Something went wrong!",
       }));
+      toast.error("Ada yang salah", {
+        description: (error as Error).message || "",
+        action: {
+          label: "OK",
+          onClick: () => {},
+        },
+      });
     } finally {
       setFormState((prev) => ({ ...prev, isLoading: false }));
     }
