@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import QueryClientProvider from "@/components/providers/QueryClientProvider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryClientProvider>{children}</QueryClientProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
