@@ -20,7 +20,6 @@ export const handleLoginAdminRegency = async (values: z.infer<typeof loginAdminR
 export const getAdminRegencyAuthInfo = async () => {
     const cookie = await cookies()
     const token = await cookie.get("access_token")?.value
-    console.log(token);
     const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/v1/me`, { headers: { Authorization: `Bearer ${token}` } })
     if (!res.ok) return null
     return await res.json() as AdminRegencySession
@@ -34,6 +33,5 @@ export const handleLogOutAdminRegency = async () => {
     if (result.error) {
         throw new Error(result.error || "Something went wrong!")
     }
-    console.log(result);
     cookie.delete("access_token")
 }
