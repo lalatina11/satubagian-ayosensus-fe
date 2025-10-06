@@ -11,7 +11,7 @@ const DashboardContainer = ({ children, role }: Props) => {
   return (
     <SidebarProvider>
       <AppSidebar role={role} />
-      <main className="p-2 min-h-screen bg-background">
+      <main className="p-2 min-h-screen bg-background flex w-full flex-col">
         <div className="flex gap-2 items-center">
           <SidebarTrigger />
           <span className="font-semibold">
