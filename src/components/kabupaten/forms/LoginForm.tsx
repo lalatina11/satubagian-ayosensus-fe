@@ -95,7 +95,7 @@ const LoginForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {formState.error && (
-              <span className="text-destructive flex justify-center items-center text-sm">
+              <span className="text-destructive flex justify-center items-center text-xs">
                 {"Error: " + formState.error}
               </span>
             )}
@@ -109,7 +109,7 @@ const LoginForm = () => {
                     <Input placeholder="john doe" {...field} />
                   </FormControl>
                   <FormDescription>Nama admin kabupaten</FormDescription>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -138,7 +138,7 @@ const LoginForm = () => {
                     </InputGroup>
                   </FormControl>
                   <FormDescription>Password admin kabupaten</FormDescription>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
