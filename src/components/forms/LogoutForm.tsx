@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { handleLogOutAdminKabupaten } from "@/lib/actions";
+import { handleLogOutAdminRegency } from "@/lib/actions";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -8,10 +8,10 @@ import { toast } from "sonner";
 const LogoutForm = () => {
   const router = useRouter();
   const handleLogout = async () => {
-    await handleLogOutAdminKabupaten();
-    router.push("/kabupaten/login");
+    await handleLogOutAdminRegency();
+    router.push("/login");
     toast.success("Logout berhasil", {
-      description: "anda akan diarahkan ke halaman login admin kabupaten",
+      description: "anda akan diarahkan ke halaman login admin",
       action: {
         label: "OK",
         onClick: () => {},
