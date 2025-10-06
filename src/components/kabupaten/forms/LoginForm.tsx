@@ -55,7 +55,7 @@ const LoginForm = () => {
     try {
       setFormState((prev) => ({ ...prev, isLoading: true }));
       await handleLoginAdminKabupaten(values);
-      router.replace("/kabupaten/admin");
+      router.replace("/dashboard");
       toast.success("Login berhasil", {
         description: "anda akan diarahkan ke admin dashboard kabupaten",
         action: {
