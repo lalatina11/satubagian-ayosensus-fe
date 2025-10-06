@@ -25,7 +25,7 @@ export const getAdminRegencyAuthInfo = async () => {
     const token = await getAccessToken()
     const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/v1/me`, { headers: { Authorization: `Bearer ${token}` } })
     if (!res.ok) return null
-    return await res.json() as UserSession
+    return { session: await res.json() as UserSession, token }
 
 }
 export const handleLogOutAdminRegency = async () => {

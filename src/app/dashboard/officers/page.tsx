@@ -6,11 +6,11 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
-  const userSession = await getAdminRegencyAuthInfo();
+  const authSession = await getAdminRegencyAuthInfo();
 
   return (
     <div>
-      <h1>Welcome {userSession?.name}</h1>
+      <h1>Welcome {authSession?.session.name}</h1>
       <h1>Officers List</h1>
     </div>
   );

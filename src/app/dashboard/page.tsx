@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const Page = async () => {
   const userSession = await getAdminRegencyAuthInfo();
 
-  return <div>Welcome {userSession?.name}</div>;
+  return <div>Welcome {userSession?.session.name}</div>;
 };
 
 export default Page;
