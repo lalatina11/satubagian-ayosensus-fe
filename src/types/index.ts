@@ -1,10 +1,13 @@
+export type UserRole = "superadmin" | "admin" | "user"
 
-export interface AdminRegencySession {
-    id: number;
-    name: string;
-    nik: string | null;
-    otp: string | null;
-    phone: string | null;
-    created_at: string;
-    updated_at: string;
+export interface UserSession {
+    id: string,
+    name: string,
+    role: Array<UserRole>,
+    first_name: null,
+    middle_name: null,
+    last_name: null,
+    kode_desa: null,
+    nik: null,
+    phone: null
 }
