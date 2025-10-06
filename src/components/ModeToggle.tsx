@@ -12,15 +12,40 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function ModeToggle() {
-  const { setTheme } = useTheme();
+interface Props {
+  isDropdown?: boolean;
+  isGhost?: boolean;
+}
+
+export function ModeToggle({ isDropdown, isGhost }: Props) {
+  const { setTheme, systemTheme, theme } = useTheme();
+
+  const handleSwitch = () => {
+    if (theme === "system") {
+      return setTheme(systemTheme === "dark" ? "light" : "dark");
+    }
+    return setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  if (!isDropdown)
+    return (
+      <Button
+        onClick={handleSwitch}
+        variant={isGhost ? "ghost" : "outline"}
+        size="icon"
+      >
+        <Moon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <Sun className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <span className="sr-only">Toggle theme</span>
+      </Button>
+    );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <Button variant={isGhost ? "ghost" : "outline"} size="icon">
+          <Moon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Sun className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
