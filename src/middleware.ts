@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname.startsWith('/dashboard')) {
-        if (!accessToken) return NextResponse.redirect(new URL('/dashboard', request.url));
+        if (!accessToken) return NextResponse.redirect(new URL('/login', request.url));
         NextResponse.next()
     }
 }
