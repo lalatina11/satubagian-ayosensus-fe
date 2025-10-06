@@ -1,5 +1,5 @@
-import LogoutForm from "@/components/kabupaten/forms/LogoutForm";
-import { getAdminKabupatenAuthInfo } from "@/lib/actions";
+import LogoutForm from "@/components/forms/LogoutForm";
+import { getAdminRegencyAuthInfo } from "@/lib/actions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
-  const session = await getAdminKabupatenAuthInfo();
+  const session = await getAdminRegencyAuthInfo();
   console.log(session);
 
   return (

@@ -2,11 +2,11 @@
 
 import z from "zod"
 import { ENV } from "./env"
-import { loginAdminKabupatenSchema } from "./schemas"
+import { loginAdminRegencySchema } from "./schemas"
 import { cookies } from "next/headers"
 import { AdminRegencySession } from "@/types"
 
-export const handleLoginAdminKabupaten = async (values: z.infer<typeof loginAdminKabupatenSchema>) => {
+export const handleLoginAdminRegency = async (values: z.infer<typeof loginAdminRegencySchema>) => {
     const cookie = await cookies()
     const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/v1/login`, { method: "POST", body: JSON.stringify(values), headers: { "Content-Type": "application/json" } })
     const result = await res.json()
@@ -17,7 +17,7 @@ export const handleLoginAdminKabupaten = async (values: z.infer<typeof loginAdmi
     cookie.set("access_token", result.access_token, { path: "/", maxAge: 60 * 60 * 24 * 2, httpOnly: true, sameSite: "lax", secure: ENV.NODE_ENV === "production" })
 }
 
-export const getAdminKabupatenAuthInfo = async () => {
+export const getAdminRegencyAuthInfo = async () => {
     const cookie = await cookies()
     const token = await cookie.get("access_token")?.value
     console.log(token);
@@ -26,7 +26,7 @@ export const getAdminKabupatenAuthInfo = async () => {
     return await res.json() as AdminRegencySession
 
 }
-export const handleLogOutAdminKabupaten = async () => {
+export const handleLogOutAdminRegency = async () => {
     const cookie = await cookies()
     const token = await cookie.get("access_token")?.value
     const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/v1/logout`, { method: "POST", headers: { Authorization: `Bearer ${token}` } })

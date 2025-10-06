@@ -1,4 +1,4 @@
-import LoginForm from "@/components/kabupaten/forms/LoginForm";
+import LoginForm from "@/components/forms/LoginForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
