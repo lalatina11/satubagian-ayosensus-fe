@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { getCurrentSession } from './lib/actions';
 
 export async function middleware(request: NextRequest) {
     const cookie = request.cookies
@@ -10,6 +11,11 @@ export async function middleware(request: NextRequest) {
 
     if (request.nextUrl.pathname.startsWith('/dashboard')) {
         if (!accessToken) return NextResponse.redirect(new URL('/login', request.url));
+        const res = await getCurrentSession(accessToken)
+        if (!res.ok || !await res.json()) {
+            await cookie.delete("access_token")
+            return NextResponse.redirect(new URL('/login', request.url))
+        }
         NextResponse.next()
     }
 }
