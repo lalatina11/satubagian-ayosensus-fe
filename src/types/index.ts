@@ -11,3 +11,13 @@ export interface UserSession {
     nik: null,
     phone: null
 }
+
+export interface Officer {
+    first_name: string | null
+    id: number
+    is_active: number
+    kode_desa: string | null;
+    last_name: string | null;
+    middle_name: string | null;
+    name: string
+}
