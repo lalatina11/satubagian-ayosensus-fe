@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -89,7 +88,9 @@ const LoginForm = () => {
     <Card className="w-sm">
       <CardHeader>
         <CardTitle className="text-center">Login boss</CardTitle>
-        <CardDescription className="text-center">Login Sebagai Admin</CardDescription>
+        <CardDescription className="text-center">
+          Login Sebagai Admin
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
