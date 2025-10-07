@@ -27,7 +27,7 @@ export const handleLoginAdminRegency = async (
   const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/login`, {
     method: "POST",
     body: JSON.stringify(values),
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
   });
   const result = await res.json();
   if (result.error) {
@@ -100,4 +100,3 @@ export const handleAddOfficers = async (values: OfficersFormValues) => {
   }
   revalidatePath("officers");
 };
-
