@@ -18,7 +18,6 @@ import { toast } from "sonner";
 import { handleAddOfficers } from "@/lib/actions";
 import { useState } from "react";
 import { Trash } from "lucide-react";
-import { log } from "console";
 
 export const officerSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
