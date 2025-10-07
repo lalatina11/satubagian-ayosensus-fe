@@ -71,8 +71,6 @@ export const getOfficersData = async () => {
     headers: { Authorization: `Bearer ${token}` },
     next: { tags: ["officers"] },
   });
-  console.log(res);
-
   return await res.json();
 };
 
