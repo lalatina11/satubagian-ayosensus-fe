@@ -63,7 +63,6 @@ const LoginForm = () => {
         },
       });
     } catch (error) {
-      console.log(error);
       setFormState((prev) => ({
         ...prev,
         error: (error as Error).message || "Something went wrong!",
