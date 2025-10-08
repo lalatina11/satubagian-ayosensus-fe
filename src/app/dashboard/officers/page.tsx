@@ -11,6 +11,7 @@ import { AddOfficersForm } from "@/components/forms/AddOfficersForm";
 
 export const metadata: Metadata = {
   title: "Admin Officers | Dashboard",
+  icons: "/ayosensus.svg",
 };
 
 interface Props {

@@ -3,6 +3,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Admin Kab | Login",
+  description: "Ayo sensus by Satu Bagian team",
+  icons: "/ayosensus.svg",
 };
 
 const Page = () => {

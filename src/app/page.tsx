@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Home",
-  // icons: "/file.svg",
+  icons: "/ayosensus.svg",
 };
 
 const Page = () => {

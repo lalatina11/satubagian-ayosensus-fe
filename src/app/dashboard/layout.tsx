@@ -9,6 +9,7 @@ import { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "Ayo Sensus | Admin",
   description: "Ayo sensus by Satu Bagian team",
+  icons: "/ayosensus.svg",
 };
 
 interface Props {

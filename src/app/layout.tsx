@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Ayo Sensus",
   description: "Ayo Sensus by Satu Bagian Team",
+  icons: "/ayosensus.svg",
 };
 
 export default function RootLayout({
