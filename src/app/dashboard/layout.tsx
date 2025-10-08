@@ -3,7 +3,13 @@ import SuperAdminDashboard from "@/components/dashboard/SuperAdminDashboard";
 import UserDashboard from "@/components/dashboard/UserDashboard";
 import { getRoleFromSession } from "@/lib";
 import { getAdminRegencyAuthInfo } from "@/lib/actions";
+import { Metadata } from "next";
 import { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: "Ayo Sensus | Admin",
+  description: "Ayo sensus by Satu Bagian team",
+};
 
 interface Props {
   children: ReactNode;
