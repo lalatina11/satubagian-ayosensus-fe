@@ -16,17 +16,26 @@ export async function middleware(request: NextRequest) {
     if (!accessToken) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
+    try {
+      const {
+        error,
+        data: res,
+        message,
+      } = await getCurrentSession(accessToken);
+      if (error || !res) throw new Error(message);
+      if (!res.ok || !(await res.json())) {
+        throw new Error(message);
+      }
 
-    const res = await getCurrentSession(accessToken);
-
-    if (!res.ok || !(await res.json())) {
-      // ✅ Fix starts here
+      return NextResponse.next();
+    } catch (error) {
       const response = NextResponse.redirect(new URL("/login", request.url));
       response.cookies.delete("access_token");
+      if (error instanceof Error) {
+        return response;
+      }
       return response;
     }
-
-    return NextResponse.next();
   }
 
   return NextResponse.next();
