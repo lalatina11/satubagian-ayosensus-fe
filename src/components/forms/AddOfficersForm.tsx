@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronDown, Trash } from "lucide-react";
+import { Check, ChevronDown, Eye, EyeClosed, Trash } from "lucide-react";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -29,6 +29,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
 
 // ✅ Schema
 export const officerSchema = z.object({
@@ -142,6 +147,7 @@ export const VillageSelect = ({
 };
 
 export function AddOfficersForm({ villages }: Props) {
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<OfficersFormValues>({
     resolver: zodResolver(officersFormSchema),
     defaultValues: {
@@ -215,11 +221,26 @@ export function AddOfficersForm({ villages }: Props) {
                     <FormItem className="flex-1 flex flex-col gap-2">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Minimal 6 karakter"
-                          {...field}
-                        />
+                        <InputGroup>
+                          <InputGroupInput
+                            placeholder="Minimal 6 karakter"
+                            type={showPassword ? "text" : "password"}
+                            {...field}
+                          />
+                          <InputGroupAddon align="inline-end">
+                            <Button
+                              variant="ghost"
+                              type="button"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                            >
+                              {showPassword ? (
+                                <EyeClosed />
+                              ) : (
+                                <Eye className="size-3" />
+                              )}
+                            </Button>
+                          </InputGroupAddon>
+                        </InputGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
