@@ -4,10 +4,11 @@ import z from "zod";
 import { ENV } from "./env";
 import { loginAdminRegencySchema } from "./schemas";
 import { cookies } from "next/headers";
-import { UserSession, Village } from "@/types";
+import { Officer, UserSession, Village } from "@/types";
 import { redirect } from "next/navigation";
 import { OfficersFormValues } from "@/components/forms/AddOfficersForm";
 import { revalidatePath } from "next/cache";
+import { actionResponse } from ".";
 
 export const getAccessToken = async () => {
   const cookie = await cookies();
@@ -21,7 +22,7 @@ export const getCurrentSession = async (token: string) => {
 };
 
 export const handleLoginAdminRegency = async (
-  values: z.infer<typeof loginAdminRegencySchema>
+  values: z.infer<typeof loginAdminRegencySchema>,
 ) => {
   const cookie = await cookies();
   const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/login`, {
@@ -65,13 +66,25 @@ export const handleLogOutAdminRegency = async () => {
 };
 
 export const getOfficersData = async () => {
-  const token = await getAccessToken();
+  try {
+    const token = await getAccessToken();
 
-  const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/officer`, {
-    headers: { Authorization: `Bearer ${token}` },
-    next: { tags: ["officers"] },
-  });
-  return await res.json();
+    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/officer`, {
+      headers: { Authorization: `Bearer ${token}` },
+      next: { tags: ["officers"] },
+    });
+    const result = await res.json();
+    const data = result.data as Array<Officer>;
+    return actionResponse({ error: false, data, message: "OK" });
+  } catch (error) {
+    return actionResponse({
+      error: false,
+      data: null,
+      message:
+        (error as Error).message ||
+        "Terjadi Kesalahan, Coba Lagi beberapa saat!",
+    });
+  }
 };
 
 export const handleAddOfficers = async (values: OfficersFormValues) => {
@@ -88,30 +101,45 @@ export const handleAddOfficers = async (values: OfficersFormValues) => {
 
   if (!res.ok) {
     throw new Error(
-      "Terjadi Kesalahan, cobalah untuk mengganti username petugas atau kode desa!"
+      "Terjadi Kesalahan, cobalah untuk mengganti username petugas atau kode desa!",
     );
   }
 
   const result = await res.json();
   if (result.errors) {
     throw new Error(
-      "Terjadi Kesalahan, cobalah untuk mengganti username petugas atau kode desa!"
+      "Terjadi Kesalahan, cobalah untuk mengganti username petugas atau kode desa!",
     );
   }
   revalidatePath("officers");
 };
 
 export const getVilages = async (name: string) => {
-  const res = await fetch(
-    `${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/region/village?name=${name}`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+  try {
+    const res = await fetch(
+      `${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/region/village?name=${name}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        next: { tags: ["villages"] },
       },
-      next: { tags: ["villages"] },
-    }
-  );
-  return (await res.json()) as Array<Village>;
+    );
+
+    return actionResponse({
+      error: false,
+      data: (await res.json()) as Array<Village>,
+      message: "OK",
+    });
+  } catch (error) {
+    return actionResponse({
+      error: false,
+      data: null,
+      message:
+        (error as Error).message ||
+        "Terjadi Kesalahan, Coba Lagi beberapa Saat",
+    });
+  }
 };
