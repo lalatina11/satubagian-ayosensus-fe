@@ -2,7 +2,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader
+  SidebarHeader,
 } from "@/components/ui/sidebar";
 import { UserRole } from "@/types";
 import { ModeToggle } from "../ModeToggle";
@@ -14,11 +14,10 @@ interface Props {
 }
 
 export async function AppSidebar({ role }: Props) {
-
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row gap-2 items-center justify-between">
-        <span className="font-semibold underline">
+        <span className="font-semibold">
           {role === "superadmin"
             ? "Super Admin Dashboard"
             : role === "admin"
@@ -28,7 +27,7 @@ export async function AppSidebar({ role }: Props) {
         <ModeToggle />
       </SidebarHeader>
       <SidebarContent>
-       <SidebarLinks role={role}/>
+        <SidebarLinks role={role} />
       </SidebarContent>
       <SidebarFooter className="flex w-full">
         <div className="flex w-full justify-end">
