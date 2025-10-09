@@ -2,7 +2,7 @@ import { AddOfficersForm } from "@/components/forms/AddOfficersForm";
 import OfficersTable from "@/components/OfficersTable";
 import { columns } from "@/components/OfficersTable/column";
 import {
-  getAdminRegencyAuthInfo,
+  getUserSessionServer,
   getOfficersData,
   getVilages,
 } from "@/lib/actions";
@@ -18,8 +18,7 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  const { error: authError, data: authSession } =
-    await getAdminRegencyAuthInfo();
+  const { error: authError, data: authSession } = await getUserSessionServer();
   const { error: officersError, data: officers } = await getOfficersData();
   const { name } = await searchParams;
   const {

@@ -52,7 +52,7 @@ export const handleLoginAdminRegency = async (
   });
 };
 
-export const getAdminRegencyAuthInfo = async () => {
+export const getUserSessionServer = async () => {
   try {
     const token = await getAccessToken();
 

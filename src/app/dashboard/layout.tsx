@@ -2,7 +2,7 @@ import AdminDashboard from "@/components/dashboard/AdminDashboard";
 import SuperAdminDashboard from "@/components/dashboard/SuperAdminDashboard";
 import UserDashboard from "@/components/dashboard/UserDashboard";
 import { getRoleFromSession } from "@/lib";
-import { getAdminRegencyAuthInfo } from "@/lib/actions";
+import { getUserSessionServer } from "@/lib/actions";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const Layout = async ({ children }: Props) => {
-  const { data: userSession } = await getAdminRegencyAuthInfo();
+  const { data: userSession } = await getUserSessionServer();
   console.log(userSession);
 
   const role = getRoleFromSession(userSession?.session.role);
