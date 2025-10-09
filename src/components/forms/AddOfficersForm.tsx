@@ -18,7 +18,7 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandItem,
-  CommandList
+  CommandList,
 } from "@/components/ui/command";
 import {
   Form,
@@ -142,9 +142,6 @@ export const VillageSelect = ({
 };
 
 export function AddOfficersForm({ villages }: Props) {
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
   const form = useForm<OfficersFormValues>({
     resolver: zodResolver(officersFormSchema),
     defaultValues: {
@@ -161,7 +158,6 @@ export function AddOfficersForm({ villages }: Props) {
     try {
       if (fields.length < 1) throw new Error("Isi setidaknya 1 data petugas!");
 
-      setLoading(true);
       await handleAddOfficers(values);
 
       toast.success("Berhasil menambahkan petugas!");
@@ -170,12 +166,10 @@ export function AddOfficersForm({ villages }: Props) {
       const message =
         (error as Error).message ||
         "Terjadi kesalahan. Coba lagi beberapa saat!";
-      setErrorMsg(message);
       toast.error("Gagal menambahkan petugas!", {
         description: message,
       });
-    } finally {
-      setLoading(false);
+      form.setError("root", { message });
     }
   };
 
@@ -187,9 +181,9 @@ export function AddOfficersForm({ villages }: Props) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {errorMsg && (
+            {form.formState.errors.root?.message && (
               <span className="text-sm text-destructive text-center block">
-                {errorMsg}
+                {form.formState.errors.root?.message}
               </span>
             )}
 
@@ -265,15 +259,18 @@ export function AddOfficersForm({ villages }: Props) {
                 type="button"
                 variant="secondary"
                 onClick={() => {
-                  setErrorMsg("");
                   append({ name: "", password: "", kode_desa: 0 });
                 }}
               >
                 + Tambah Petugas Lain
               </Button>
 
-              <Button disabled={loading} type="submit" className="w-1/3">
-                {loading ? "Menyimpan..." : "Simpan"}
+              <Button
+                disabled={form.formState.isLoading}
+                type="submit"
+                className="w-1/3"
+              >
+                {form.formState.isLoading ? "Menyimpan..." : "Simpan"}
               </Button>
             </div>
           </form>
