@@ -1,3 +1,4 @@
+import { AddOfficersForm } from "@/components/forms/AddOfficersForm";
 import OfficersTable from "@/components/OfficersTable";
 import { columns } from "@/components/OfficersTable/column";
 import {
@@ -5,9 +6,7 @@ import {
   getOfficersData,
   getVilages,
 } from "@/lib/actions";
-import { Officer } from "@/types";
 import { Metadata } from "next";
-import { AddOfficersForm } from "@/components/forms/AddOfficersForm";
 
 export const metadata: Metadata = {
   title: "Admin Officers | Dashboard",
@@ -20,22 +19,31 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const authSession = await getAdminRegencyAuthInfo();
-  const officersRes = await getOfficersData();
-  const officers = officersRes.data as Array<Officer>;
+  const { error: officersError, data: officers } = await getOfficersData();
   const { name } = await searchParams;
-  const villages = await getVilages(name ?? "");
+  const {
+    error: getVillagesError,
+    data: villages,
+    message,
+  } = await getVilages(name ?? "");
+
+  if (getVillagesError || officersError) throw new Error(message || "");
 
   return (
     <main className="flex flex-col gap-3 w-full">
       <h1>Welcome {authSession?.session.name}</h1>
-      <section className="flex flex-col gap-3 p-5">
-        <AddOfficersForm villages={villages} />
-      </section>
+      {villages && villages.length > 0 && (
+        <section className="flex flex-col gap-3 p-5">
+          <AddOfficersForm villages={villages ?? []} />
+        </section>
+      )}
       <section className="flex flex-col gap-3 p-5 rounded-md bg-card">
         <h1 className="text-2xl font-semibold">Daftar Petugas</h1>
-        <div className="">
-          <OfficersTable columns={columns} data={officers} />
-        </div>
+        {officers?.length && (
+          <div className="">
+            <OfficersTable columns={columns} data={officers} />
+          </div>
+        )}
       </section>
     </main>
   );
