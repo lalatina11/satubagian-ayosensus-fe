@@ -37,11 +37,7 @@ import { toast } from "sonner";
 
 const LoginForm = () => {
   const router = useRouter();
-  const [formState, setFormState] = useState({
-    isLoading: false,
-    isShowPassword: false,
-    error: "",
-  });
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +48,6 @@ const LoginForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setFormState((prev) => ({ ...prev, isLoading: true }));
       await handleLoginAdminRegency(values);
       router.replace("/dashboard");
       toast.success("Login berhasil", {
@@ -63,24 +58,20 @@ const LoginForm = () => {
         },
       });
     } catch (error) {
-      setFormState((prev) => ({
-        ...prev,
-        error: (error as Error).message || "Something went wrong!",
-      }));
+      const { message } = error as Error;
+      form.setError("root", { message });
       toast.error("Ada yang salah", {
-        description: (error as Error).message || "",
+        description: message || "",
         action: {
           label: "OK",
           onClick: () => {},
         },
       });
-    } finally {
-      setFormState((prev) => ({ ...prev, isLoading: false }));
     }
   }
 
   const handleShowPass = () => {
-    setFormState((prev) => ({ ...prev, isShowPassword: !prev.isShowPassword }));
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -94,9 +85,9 @@ const LoginForm = () => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {formState.error && (
+            {form.formState.errors.root?.message && (
               <span className="text-destructive flex justify-center items-center text-xs">
-                {"Error: " + formState.error}
+                {form.formState.errors.root.message}
               </span>
             )}
             <FormField
@@ -123,7 +114,7 @@ const LoginForm = () => {
                       <InputGroupInput
                         {...field}
                         placeholder="******"
-                        type={formState.isShowPassword ? "text" : "password"}
+                        type={showPassword ? "text" : "password"}
                       />
                       <InputGroupAddon align="inline-end">
                         <Button
@@ -131,7 +122,7 @@ const LoginForm = () => {
                           type="button"
                           variant="ghost"
                         >
-                          {formState.isShowPassword ? <EyeClosed /> : <Eye />}
+                          {showPassword ? <EyeClosed /> : <Eye />}
                         </Button>
                       </InputGroupAddon>
                     </InputGroup>
@@ -141,11 +132,11 @@ const LoginForm = () => {
               )}
             />
             <Button
-              disabled={formState.isLoading}
+              disabled={form.formState.isLoading}
               className="w-full"
               type="submit"
             >
-              {formState.isLoading ? <Spinner /> : "Login"}
+              {form.formState.isLoading ? <Spinner /> : "Login"}
             </Button>
           </form>
         </Form>
