@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getCurrentSession } from "./lib/actions";
+import { UserSession } from "./types";
+import { getRoleFromSession } from "./lib";
 
 export async function middleware(request: NextRequest) {
   const cookie = request.cookies;
@@ -23,10 +25,17 @@ export async function middleware(request: NextRequest) {
         message,
       } = await getCurrentSession(accessToken);
       if (error || !res) throw new Error(message);
-      if (!res.ok || !(await res.json())) {
+      if (!res.ok) {
         throw new Error(message);
       }
-
+      const session = (await res.json()) as UserSession;
+      if (request.nextUrl.pathname.startsWith("/dashboard/officers")) {
+        const role = getRoleFromSession(session.role);
+        if (role !== "superadmin") {
+          return NextResponse.redirect(new URL("/dashboard", request.url));
+        }
+        return NextResponse.next();
+      }
       return NextResponse.next();
     } catch (error) {
       const response = NextResponse.redirect(new URL("/login", request.url));
