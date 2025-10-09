@@ -16,9 +16,18 @@ export const getAccessToken = async () => {
 };
 
 export const getCurrentSession = async (token: string) => {
-  return await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/me`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  try {
+    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/me`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+    });
+    return actionResponse({ error: false, data: res, message: "OK" });
+  } catch (error) {
+    return actionResponse({
+      error: false,
+      data: null,
+      message: (error as Error).message,
+    });
+  }
 };
 
 export const handleLoginAdminRegency = async (
@@ -44,12 +53,23 @@ export const handleLoginAdminRegency = async (
 };
 
 export const getAdminRegencyAuthInfo = async () => {
-  const token = await getAccessToken();
-  const res = await getCurrentSession(token as string);
-  if (!res.ok) {
-    return redirect("/login");
+  try {
+    const token = await getAccessToken();
+
+    const { data: res } = await getCurrentSession(token as string);
+    if (!res) throw new Error("Terjadi Kesalahan!");
+    if (!res?.ok) {
+      return redirect("/login");
+    }
+    const data = { session: (await res.json()) as UserSession, token };
+    return actionResponse({ error: false, data, message: "OK" });
+  } catch (error) {
+    return actionResponse({
+      error: false,
+      data: null,
+      message: (error as Error).message,
+    });
   }
-  return { session: (await res.json()) as UserSession, token };
 };
 export const handleLogOutAdminRegency = async () => {
   const cookie = await cookies();
