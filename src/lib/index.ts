@@ -1,7 +1,7 @@
-import { UserRole } from "@/types";
+import { ActionResponse, UserRole } from "@/types";
 
 export const getRoleFromSession = (
-  role: Array<UserRole> | undefined
+  role: Array<UserRole> | undefined,
 ): UserRole => {
   if (!role) return "user";
   const isSuperAdmin = role?.includes("superadmin");
@@ -38,3 +38,7 @@ export const faqData = [
     body: "Pengisian E-Sensus membutuhkan waktu sekitar 15-30 menit per keluarga, tergantung jumlah anggota keluarga. Anda dapat menyimpan progress dan melanjutkan pengisian di lain waktu. Sistem akan otomatis menyimpan data yang telah diisi.",
   },
 ];
+
+export const actionResponse = <T = unknown>(props: ActionResponse<T>) => {
+  return props;
+};
