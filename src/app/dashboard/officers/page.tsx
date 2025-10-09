@@ -34,7 +34,7 @@ const Page = async ({ searchParams }: Props) => {
       <h1>Welcome {authSession?.session.name}</h1>
       {villages && villages.length > 0 && (
         <section className="flex flex-col gap-3 p-5">
-          <AddOfficersForm villages={villages ?? []} />
+          <AddOfficersForm villages={villages} />
         </section>
       )}
       <section className="flex flex-col gap-3 p-5 rounded-md bg-card">
