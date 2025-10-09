@@ -6,7 +6,9 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
-  const userSession = await getAdminRegencyAuthInfo();
+  const { error, data: userSession, message } = await getAdminRegencyAuthInfo();
+
+  if (error || !userSession) throw new Error(message);
 
   return <div>Welcome {userSession?.session.name}</div>;
 };
