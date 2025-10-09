@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
+import DashboardContainer from "../containers/DashboardContainer";
 
-interface Props{
-  children:ReactNode
+interface Props {
+  children: ReactNode;
 }
 
-const AdminDashboard = ({}:Props) => {
-  return <div>AdminDashboard</div>;
+const AdminDashboard = ({ children }: Props) => {
+  return <DashboardContainer role="admin">{children}</DashboardContainer>;
 };
 
 export default AdminDashboard;
