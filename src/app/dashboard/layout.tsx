@@ -18,11 +18,12 @@ interface Props {
 
 const Layout = async ({ children }: Props) => {
   const { data: userSession } = await getAdminRegencyAuthInfo();
+  console.log(userSession);
 
   const role = getRoleFromSession(userSession?.session.role);
   return role === "superadmin" ? (
     <SuperAdminDashboard>{children}</SuperAdminDashboard>
-  ) : role === "admin" ? (
+  ) : role === "admin" || role === "verifier" ? (
     <AdminDashboard>{children}</AdminDashboard>
   ) : (
     <UserDashboard>{children}</UserDashboard>
