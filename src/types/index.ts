@@ -28,3 +28,9 @@ export type Village = {
   subdistrict: string;
   subdistrict_kode: number;
 };
+
+export type ActionResponse<T> = {
+  error: boolean;
+  data?: T;
+  message: string;
+};
