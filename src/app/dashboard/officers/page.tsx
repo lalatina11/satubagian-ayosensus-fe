@@ -15,14 +15,15 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: { name: Promise<string> };
+  searchParams: Promise<{ name: string }>;
 }
 
 const Page = async ({ searchParams }: Props) => {
   const authSession = await getAdminRegencyAuthInfo();
   const officersRes = await getOfficersData();
   const officers = officersRes.data as Array<Officer>;
-  const villages = await getVilages((await searchParams.name) || "");
+  const { name } = await searchParams;
+  const villages = await getVilages(name ?? "");
 
   return (
     <main className="flex flex-col gap-3 w-full">
