@@ -17,7 +17,7 @@ interface Props {
   role: UserRole;
 }
 
-const SidebarLinks = ({}: Props) => {
+const SidebarLinks = ({ role }: Props) => {
   const items = [
     {
       title: "Dashboard",
@@ -33,12 +33,17 @@ const SidebarLinks = ({}: Props) => {
 
   const pathname = usePathname();
 
+  const filteredItem =
+    role === "superadmin"
+      ? items
+      : items.filter((item) => item.title !== "Petugas");
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Links</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
+          {filteredItem.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 variant={item.url === pathname ? "outline" : "default"}
