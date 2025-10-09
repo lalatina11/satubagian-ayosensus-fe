@@ -5,7 +5,9 @@ export const getRoleFromSession = (
 ): UserRole => {
   if (!role) return "user";
   const isSuperAdmin = role?.includes("superadmin");
-  const isAdmin = role.includes("admin") && !role.includes("superadmin");
+  const isAdmin =
+    role.includes("admin") ||
+    (role.includes("verifier") && !role.includes("superadmin"));
   if (isSuperAdmin) return "superadmin";
   if (isAdmin) return "admin";
   return "user";
