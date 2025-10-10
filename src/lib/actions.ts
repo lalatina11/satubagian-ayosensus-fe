@@ -2,9 +2,15 @@
 
 import z from "zod";
 import { ENV } from "./env";
-import { checkNikCitizenSchema, loginAdminRegencySchema, loginCitizenSchema, verifyOtpSchema } from "./schemas";
+import {
+    checkNikCitizenSchema,
+    familyDataSchema,
+    loginAdminRegencySchema,
+    loginCitizenSchema,
+    verifyOtpSchema
+} from "./schemas";
 import { cookies } from "next/headers";
-import { Officer, UserSession, Village } from "@/types";
+import { FamilyData, Officer, UserSession, Village } from "@/types";
 import { redirect } from "next/navigation";
 import { OfficersFormValues } from "@/components/forms/AddOfficersForm";
 import { revalidatePath } from "next/cache";
@@ -236,4 +242,57 @@ export const handleLoginCitizens = async (values: z.infer<typeof loginCitizenSch
         sameSite: "lax",
         secure: ENV.NODE_ENV === "production",
     })
+}
+
+export const handleAddFamilyData = async (values: z.infer<typeof familyDataSchema>) => {
+    const token = await getAccessToken()
+    if (!token) throw new Error("You are not authenticated!")
+    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/kirim-keluarga`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(values)
+    })
+    console.log(await res.json())
+    revalidatePath("familyData")
+}
+
+export const getFamilyData = async () => {
+    try {
+
+        const token = await getAccessToken()
+        if (!token) throw new Error("You are not authenticated!")
+        const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/keluarga`, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }, next: { tags: [ 'familyData' ] }
+        })
+        const result = await res.json()
+        const family = result.data as FamilyData
+        return actionResponse({ error: false, data: family, message: "OK" })
+    } catch (e) {
+        return actionResponse({ error: true, data: null, message: (e as Error).message })
+    }
+}
+
+export const getFamilyMembersData = async () => {
+    const token = await getAccessToken()
+    if (!token) throw new Error("You are not authenticated!")
+    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/anggota-keluarga`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    })
+    console.log(res)
+    console.log(await res.json())
+    return actionResponse({ error: false, data: await res.json(), message: "OK" })
 }
