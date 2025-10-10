@@ -20,7 +20,6 @@ interface Props {
 }
 
 const FamilyDataForm = ({ villages, familyData }: Props) => {
-    console.log(familyData)
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
