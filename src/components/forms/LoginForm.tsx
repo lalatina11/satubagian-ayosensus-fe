@@ -49,7 +49,6 @@ const LoginForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await handleLoginAdminRegency(values);
-      router.replace("/dashboard");
       toast.success("Login berhasil", {
         description: "anda akan diarahkan ke admin dashboard",
         action: {
@@ -57,6 +56,7 @@ const LoginForm = () => {
           onClick: () => {},
         },
       });
+      router.replace("/dashboard");
     } catch (error) {
       const { message } = error as Error;
       form.setError("root", { message });
