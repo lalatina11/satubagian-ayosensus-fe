@@ -13,6 +13,7 @@ export interface UserSession {
     kode_desa: null;
     nik: null;
     phone: null;
+    household_id: number
 }
 
 export interface Officer {
@@ -39,3 +40,23 @@ export type ActionResponse<T> = {
 };
 
 export type FamilyData = z.infer<typeof familyDataSchema>
+
+export interface FamilyMemberType {
+    id: number;
+    household_id: number;
+    full_name: string;
+    nik: string;
+    address: string | null;
+    stay: number;
+    gender: string;
+    birth_place: string | null;
+    birth_date: string;
+    nationality: string | null;
+    tribes: string | null;
+    religion: string | null;
+    used_language: string | null;
+    family_status: string | null;
+    marital_status: string | null;
+    created_at: string;
+    updated_at: string;
+}

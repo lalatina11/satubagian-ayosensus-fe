@@ -5,12 +5,13 @@ import { ENV } from "./env";
 import {
     checkNikCitizenSchema,
     familyDataSchema,
+    familyMemberSchema,
     loginAdminRegencySchema,
     loginCitizenSchema,
     verifyOtpSchema
 } from "./schemas";
 import { cookies } from "next/headers";
-import { FamilyData, Officer, UserSession, Village } from "@/types";
+import { FamilyData, FamilyMemberType, Officer, UserSession, Village } from "@/types";
 import { redirect } from "next/navigation";
 import { OfficersFormValues } from "@/components/forms/AddOfficersForm";
 import { revalidatePath } from "next/cache";
@@ -282,17 +283,38 @@ export const getFamilyData = async () => {
 }
 
 export const getFamilyMembersData = async () => {
-    const token = await getAccessToken()
-    if (!token) throw new Error("You are not authenticated!")
-    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/anggota-keluarga`, {
-        method: "GET",
+    try {
+        const token = await getAccessToken()
+        if (!token) throw new Error("You are not authenticated!")
+        const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/anggota-keluarga`, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `bearer ${token}`
+            },
+            next: { tags: [ 'familyMembersData' ] }
+        })
+        const result = await res.json()
+        const data = result.data as Array<FamilyMemberType>
+        return actionResponse({ error: false, data, message: "OK" })
+    } catch (e) {
+        return actionResponse({ error: true, data: null, message: (e as Error).message })
+    }
+}
+
+export const handleAddFamilyMembersData = async (values: z.infer<typeof familyMemberSchema>) => {
+    const { data: userSession } = await getUserSessionServer()
+    if (!userSession) throw new Error("You are not authenticated!")
+    const res = await fetch(`${ENV.NEXT_PUBLIC_BACKEND_API_BASE_URL}/kirim-anggota-keluarga`, {
+        method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        }
+            Authorization: `bearer ${userSession.token}`
+        },
+        body: JSON.stringify({ ...values, household_id: userSession.session.household_id })
     })
-    console.log(res)
     console.log(await res.json())
-    return actionResponse({ error: false, data: await res.json(), message: "OK" })
+    revalidatePath("familyMembersData")
 }

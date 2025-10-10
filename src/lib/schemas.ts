@@ -37,3 +37,28 @@ export const familyDataSchema = z.object({
     zipcode: z.string().min(5, "Isi Kode POS minimal 5 digit").optional().or(z.literal("")),
     housings: housingSchema
 })
+
+
+export const familyMemberSchema = z.object({
+    full_name: z.string().min(3, "Nama lengkap minimal 3 karakter"),
+    nik: z.string().min(16, "NIK harus 16 digit").max(16, "NIK harus 16 digit"),
+    address: z.string().min(3, "Isi Alamat minimal 3 karakter").optional().or(z.literal("")),
+    stay: z.number().min(1, "Lama tinggal minimal 1 tahun"),
+    gender: z.enum([ 'male', 'female' ]).optional().or(z.literal("male")),
+    birth_place: z.string().min(3, "Tempat Lahir minimal 3 karakter").optional().or(z.literal("")),
+    birth_date: z.string(),
+    nationality: z.enum([ 'wna', 'wni' ]).optional().or(z.literal("wni")),
+    tribes: z.string().min(3, "Suku minimal 3 karakter").optional().or(z.literal("")),
+    religion: z.string().min(3, "Agama minimal 3 karakter").optional().or(z.literal("")),
+    used_language: z.string().min(3, "Bahasa minimal 3 karakter").optional().or(z.literal("")),
+    family_status: z.string().min(3, "Status Keluarga minimal 3 karakter").optional().or(z.literal("")),
+    marital_status: z.string().min(3, "Status Perkawinan minimal 3 karakter").optional().or(z.literal("")),
+    works: z.object({
+        activity: z.string().min(3, "Aktivitas minimal 3 karakter").optional().or(z.literal("")),
+        job: z.string().min(3, "Pekerjaan minimal 3 karakter").optional().or(z.literal("")),
+        job_status: z.string().min(3, "Status Pekerjaan minimal 3 karakter").optional().or(z.literal("")),
+    }).optional(),
+    educations: z.object({
+        education: z.string().min(3, "Pendidikan minimal 3 karakter").optional().or(z.literal("")),
+    }).optional(),
+})
