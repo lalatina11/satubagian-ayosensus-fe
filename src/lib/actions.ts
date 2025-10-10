@@ -98,7 +98,7 @@ export const getOfficersData = async () => {
     return actionResponse({ error: false, data, message: "OK" });
   } catch (error) {
     return actionResponse({
-      error: false,
+      error: true,
       data: null,
       message:
         (error as Error).message ||
