@@ -18,7 +18,7 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  const { error: authError, data: authSession } = await getUserSessionServer();
+  const { data: authSession } = await getUserSessionServer();
   const { error: officersError, data: officers } = await getOfficersData();
   const { name } = await searchParams;
   const {
@@ -27,8 +27,7 @@ const Page = async ({ searchParams }: Props) => {
     message,
   } = await getVilages(name ?? "");
 
-  if (getVillagesError || officersError || authError)
-    throw new Error(message || "");
+  if (getVillagesError || officersError) throw new Error(message || "");
 
   return (
     <main className="flex flex-col gap-3 w-full">

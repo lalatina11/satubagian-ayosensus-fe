@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const Page = async () => {
   const { error, data: userSession, message } = await getUserSessionServer();
 
-  if (error || !userSession) throw new Error(message);
+  if (error) throw new Error(message);
 
   return <div>Welcome {userSession?.session.name}</div>;
 };
