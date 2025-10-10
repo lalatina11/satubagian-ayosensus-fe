@@ -96,7 +96,7 @@ const LoginForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nama</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input placeholder="john doe" {...field} />
                   </FormControl>
