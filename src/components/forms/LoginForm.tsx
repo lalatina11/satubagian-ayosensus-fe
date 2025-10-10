@@ -77,9 +77,10 @@ const LoginForm = () => {
   return (
     <Card className="w-sm">
       <CardHeader>
-        <CardTitle className="text-center">Login boss</CardTitle>
+        <CardTitle className="text-center">Login Dashboard</CardTitle>
         <CardDescription className="text-center">
-          Login Sebagai Admin
+          Masukkan nama pengguna dan kata sandi untuk mengakses halaman
+          dashboard
         </CardDescription>
       </CardHeader>
       <CardContent>
