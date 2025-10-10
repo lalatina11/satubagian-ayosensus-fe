@@ -120,11 +120,11 @@ const CheckNIK = () => {
                         )}
                     />
                         <Button
-                            disabled={form.formState.isLoading}
+                            disabled={form.formState.isLoading || form.formState.isSubmitting}
                             className="w-full"
                             type="submit"
                         >
-                            {form.formState.isLoading ? <Spinner/> : "Check NIK"}
+                            {form.formState.isLoading || form.formState.isSubmitting ? <Spinner/> : "Check NIK"}
                         </Button>
                     </form>
                 </Form>

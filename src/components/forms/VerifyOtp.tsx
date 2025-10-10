@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { Spinner } from "@/components/ui/spinner";
 
 type Field = ControllerRenderProps<FieldValues, string>
 
@@ -89,7 +90,10 @@ const VerifyOtp = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <Button className="w-full" disabled={form.formState.isLoading || form.formState.isSubmitting}
+                            type="submit">
+                        {form.formState.isLoading || form.formState.isSubmitting ? <Spinner/> : "Verifikasi"}
+                    </Button>
                 </form>
             </Form>
         </CardContent>

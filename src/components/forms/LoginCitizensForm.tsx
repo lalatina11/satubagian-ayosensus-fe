@@ -102,11 +102,11 @@ const LoginCitizensForm = () => {
                             )}
                         />
                         <Button
-                            disabled={form.formState.isLoading}
+                            disabled={form.formState.isLoading || form.formState.isSubmitting}
                             className="w-full"
                             type="submit"
                         >
-                            {form.formState.isLoading ? <Spinner/> : "Login"}
+                            {form.formState.isLoading || form.formState.isSubmitting ? <Spinner/> : "Login"}
                         </Button>
                     </form>
                 </Form>
