@@ -18,7 +18,6 @@ interface Props {
 
 const Layout = async ({ children }: Props) => {
   const { data: userSession } = await getUserSessionServer();
-  console.log(userSession);
 
   const role = getRoleFromSession(userSession?.session.role);
   return role === "superadmin" ? (
