@@ -35,5 +35,5 @@ export const familyDataSchema = z.object({
     rw: z.string().min(3, "RW harus 3 digit").max(3, "RW harus 3 digit").optional().or(z.literal("")),
     kode_desa: z.number().min(1, "Pilih kode desa yang valid").optional(),
     zipcode: z.string().min(5, "Isi Kode POS minimal 5 digit").optional().or(z.literal("")),
-    housing: housingSchema
+    housings: housingSchema
 })

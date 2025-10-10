@@ -12,6 +12,7 @@ import { FamilyData, Village } from "@/types";
 import { Input } from "@/components/ui/input";
 import { handleAddFamilyData } from "@/lib/actions";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 interface Props {
     villages: Array<Village>
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const FamilyDataForm = ({ villages, familyData }: Props) => {
+    console.log(familyData)
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -29,12 +31,12 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
             rw: familyData?.rw || "",
             kode_desa: familyData?.kode_desa || 0,
             zipcode: familyData?.zipcode || "",
-            housing: {
-                electricity: familyData?.housing?.electricity || "",
-                floor: familyData?.housing?.floor || "",
-                ownership_status: familyData?.housing?.ownership_status || "",
-                toilet: familyData?.housing?.toilet || "",
-                water: familyData?.housing?.water || "",
+            housings: {
+                electricity: familyData?.housings?.electricity || "",
+                floor: familyData?.housings?.floor || "",
+                ownership_status: familyData?.housings?.ownership_status || "",
+                toilet: familyData?.housings?.toilet || "",
+                water: familyData?.housings?.water || "",
             }
         },
     })
@@ -44,9 +46,15 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         try {
-
-            console.log(values)
             await handleAddFamilyData(values)
+            toast.success("Berhasil menyimpan data keluarga", {
+                description: "Data Keluarga anda sudah terimpan",
+                action: {
+                    label: "OK",
+                    onClick: () => {
+                    }
+                }
+            })
         } catch (e) {
             const { message } = e as Error
             form.setError("root", { message })
@@ -155,7 +163,7 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="housing.ownership_status"
+                                    name="housings.ownership_status"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
                                             <FormLabel>Kepemilikan Rumah</FormLabel>
@@ -168,7 +176,7 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="housing.electricity"
+                                    name="housings.electricity"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
                                             <FormLabel>Tegangan Listrik rumah</FormLabel>
@@ -181,7 +189,7 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="housing.water"
+                                    name="housings.water"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
                                             <FormLabel>Pengairan di rumah anda</FormLabel>
@@ -194,7 +202,7 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="housing.toilet"
+                                    name="housings.toilet"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
                                             <FormLabel>Toilet</FormLabel>
@@ -207,7 +215,7 @@ const FamilyDataForm = ({ villages, familyData }: Props) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="housing.floor"
+                                    name="housings.floor"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
                                             <FormLabel>Alas Rumah</FormLabel>
