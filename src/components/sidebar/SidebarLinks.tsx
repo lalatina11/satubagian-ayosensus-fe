@@ -30,7 +30,7 @@ const SidebarLinks = ({ role }: Props) => {
             icon: Users,
         },
         {
-            title: "Mulai Sensus",
+            title: "Sensus",
             url: "/dashboard/sensus",
             icon: Play,
         },
