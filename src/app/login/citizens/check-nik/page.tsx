@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import LoginCitizensForm from "@/components/forms/LoginCitizensForm";
+import CheckNIK from "@/components/forms/CheckNIK";
 
 export const metadata: Metadata = {
-    title: "Admin Kab | Login",
+    title: "Admin Kab | Check NIK",
     description: "Ayo sensus by Satu Bagian team",
     icons: "/ayosensus.svg",
 };
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const Page = () => {
     return (
         <div className="container mx-auto flex flex-col justify-center items-center min-h-screen">
-            <LoginCitizensForm/>
+            <CheckNIK/>
         </div>
     );
 };

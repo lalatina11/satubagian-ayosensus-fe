@@ -6,12 +6,20 @@ import { getRoleFromSession } from "./lib";
 export async function middleware(request: NextRequest) {
     const cookie = request.cookies;
     const accessToken = cookie.get("access_token")?.value;
+    const nik = cookie.get("nik")?.value as string
 
     if (request.nextUrl.pathname.startsWith("/login")) {
         if (accessToken) {
             return NextResponse.redirect(new URL("/dashboard", request.url));
         }
+        if (request.nextUrl.pathname.startsWith("/login/citizens/verify-otp")) {
+            if (!nik || !nik.length) {
+                return NextResponse.redirect(new URL("/login/citizens", request.url));
+            }
+            return NextResponse.next();
+        }
         return NextResponse.next();
+        
     }
 
     if (request.nextUrl.pathname.startsWith("/dashboard")) {
