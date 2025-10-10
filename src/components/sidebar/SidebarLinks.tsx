@@ -2,64 +2,69 @@
 
 import Link from "next/link";
 import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
 } from "../ui/sidebar";
 import { UserRole } from "@/types";
-import { LayoutDashboard, Users } from "lucide-react";
+import { LayoutDashboard, Play, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  role: UserRole;
+    role: UserRole;
 }
 
 const SidebarLinks = ({ role }: Props) => {
-  const items = [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Petugas",
-      url: "/dashboard/officers",
-      icon: Users,
-    },
-  ];
+    const items = [
+        {
+            title: "Dashboard",
+            url: "/dashboard",
+            icon: LayoutDashboard,
+        },
+        {
+            title: "Petugas",
+            url: "/dashboard/officers",
+            icon: Users,
+        },
+        {
+            title: "Mulai Sensus",
+            url: "/dashboard/sensus",
+            icon: Play,
+        },
+    ];
 
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  const filteredItem =
-    role === "superadmin"
-      ? items
-      : items.filter((item) => item.title !== "Petugas");
+    const filteredItem =
+        role === "superadmin"
+            ? items
+            : items.filter((item) => item.title !== "Petugas");
 
-  return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Links</SidebarGroupLabel>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          {filteredItem.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                variant={item.url === pathname ? "outline" : "default"}
-                asChild
-              >
-                <Link href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
-  );
+    return (
+        <SidebarGroup>
+            <SidebarGroupLabel>Links</SidebarGroupLabel>
+            <SidebarGroupContent>
+                <SidebarMenu>
+                    {filteredItem.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton
+                                variant={item.url === pathname ? "outline" : "default"}
+                                asChild
+                            >
+                                <Link href={item.url}>
+                                    <item.icon/>
+                                    <span>{item.title}</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
+                </SidebarMenu>
+            </SidebarGroupContent>
+        </SidebarGroup>
+    );
 };
 
 export default SidebarLinks;
